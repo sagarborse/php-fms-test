@@ -1,3 +1,43 @@
 #!/usr/bin/env php
 <?php
 require_once('config/install.sh.php');
+$fs = new FileSystem($pdo);
+$main = new Main($fs);
+
+$usage = array(
+    "Create a Root Folder                  : ./fmshelp create-root-folder --path='SomePath' --name='SomeName'",
+    "Create a Root Folder and Child Folder : ./fmshelp create-root-and-child-folder --root-folder-path='/some-path-again' --root-folder-name='Parent Url' --child-folder-path='/some-path-again/item1' --child-folder-name='Item 1'",
+    "Create a Root Folder and a File       : ./fmshelp create-root-folder-and-file --folder-name='some_name' --folder-path='/some/path/to/folder' --file-name='Some_Document.txt' --file-size=123",
+    "Delete a Folder                       : ./fmshelp delete-folder --id=3",
+    "Rename a Folder                       : ./fmshelp rename-folder --id=5 --new-name='Changed Directory Name'",
+    "Get Folder Count]                     : ./fmshelp get-folder-count --id=5",
+    "Get Folder Count (recursive)          : ./fmshelp get-all-sub-folder-count --id=5",
+    "Get Folders (var_export)              : ./fmshelp get-folders --id=5",
+    "Get Files From Folder (var_export)    : ./fmshelp get-files --id=5",
+    "Get Files Count From Folder           : ./fmshelp get-file-count --id=5",
+    "Get Directory Size (no subfolders)    : ./fmshelp get-total-file-size-in-folder --id=5",
+    "Get Directory Size (inc. subfolders)  : ./fmshelp get-directory-size --id=5",
+    "Create a File in Existing Folder      : ./fmshelp create-file --folder-id=1 --file-name='Annual_Report.txt' --file-size=3131",
+    "Update an existing File               : ./fmshelp update-file --id=3 --name='Thew New File Name.txt' --size=777",
+    "Delete an Existing File               : ./fmshelp delete-file --id=3",
+    "Rename an Existing File               : ./fmshelp rename-file --id=3 --new-name='The new Filename.txt'",
+);
+
+$params = $argv;
+unset($params[0]);
+
+if (!$params) {
+    echo chr(10).'Please provide the command as the first arguments and arguments afterwards.'.chr(10);
+    echo 'Here are some usage samples::'.chr(10).chr(10);
+    echo implode(chr(10).chr(10), $usage).chr(10).chr(10);
+} else {
+    $method = $main->getMethodName($params[1]);
+    if (!method_exists($main, $method)) {
+        echo chr(10).'The method does not exist in file system'.chr(10);
+        echo 'Please type ./fmshelp to get usage examples'.chr(10);
+        echo chr(10);
+    } else {
+        $result = $main->handle($method, $params);
+        echo chr(10).$result.chr(10).chr(10);
+    }
+}
