@@ -1,6 +1,13 @@
 JDI Developer Task
 ==================
 
+How To Test and Install The Project
+--------------------------
+- Create Database Of Your Choice
+- Change the Database details in  config/constant.php
+- Run the queries manually from config/database.sql on to database
+- run ./fmshelp to get all the options from root
+
 Prerequisites
 -------------
 

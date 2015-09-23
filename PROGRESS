@@ -1,0 +1,14 @@
+- Added a bit of a folder structure
+- Use Autoloader
+- Organized the code modularly so that it is easy to extend and built
+- Auto loader was chosen as a quick way to get things moving, however I'm aware that a lot of people use auto generated clasmaps to achieve the same thing.
+- TODO - make sure text limits in mysql are not exceeded, by adding length checks and exeptions thrown..
+- Note. Because Folder stores full path, if some folder "in the middle" gets renamed, all the relevant entries will have to be updated as well
+- On the other hand - this way we dont have to do recursive lookup to build the full path, which is good for speed.
+- TODO Folder test - add getter and setter test for id
+- Possibly 2 methods for root folders and child folders is a bit excessive - could be as simple as - if parent is null, then it's a root folder
+- To make check simpler, I'm going to persist full file path in database for files
+- Haven't added Test Cases for the application
+- Rename file is kind of update file, except theres the additional hassle of renaming the physical file - which I'm skipping..
+- TODO - need to think about how to make these actions more transitional, so that a full check is done upfront without persisting anything in db
+- TODO - it would be nice to have try / catch statements around all the database operations
